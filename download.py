@@ -2,8 +2,6 @@
 from pytube import YouTube
 
 # install these
-from shutil import copyfile
-import shutil
 import moviepy.editor as mp
 from bs4 import BeautifulSoup
 
@@ -11,11 +9,9 @@ import urllib.request
 import re
 import os
 
-# need to make a temp folder called temp in your music directory
-# replace these paths with your path
+# replace this with music path
 # make sure to use / and not \
-path = "C:/Your/Path/To/Music/temp"
-path2 = "C:/Your/Path/To/Music"
+path = "C:/Your/Path/To/Music/"
 
 # list of video links
 # copy and paste from youtube
@@ -85,24 +81,10 @@ if mp3 == True:
     for file in [n for n in os.listdir(path) if re.search('mp4',n)]:
     
         full_path = os.path.join(path, file)
-        output_path = os.path.join(path2, os.path.splitext(file)[0] + '.mp3')
+        output_path = os.path.splitext(file)[0] + '.mp3'
         clip = mp.AudioFileClip(full_path)
         clip.write_audiofile(output_path)
+        os.remove(full_path)
 
-else:
-    for file in [n for n in os.listdir(path) if re.search('mp4',n)]:
-        
-        full_path = os.path.join(path, file)
-        output_path = os.path.join(path2, os.path.splitext(file)[0] + '.mp4')
-        copyfile(full_path, output_path)
-        
-
-shutil.rmtree(path)
-os.mkdir(path)
     
 print('Task Completed!')
-
-
-
-
-
